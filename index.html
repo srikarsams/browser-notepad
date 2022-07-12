@@ -1,0 +1,42 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blockchain Notes</title>
+</head>
+
+<body>
+  <ol contenteditable>
+    <li>Edit me...</li>
+  </ol>
+</body>
+<script type="text/javascript">
+  const ol = document.querySelector('ol');
+  ol.addEventListener("blur", handleList)
+
+  function handleList() {
+    const list = document.querySelectorAll('li')
+    const data = new Array(...list).map(element => {
+      return element.textContent
+    });
+    localStorage.setItem('data', JSON.stringify(data))
+  }
+
+  function loadList() {
+    const data = JSON.parse(localStorage.getItem('data') || '[]');
+    const frag = document.createDocumentFragment()
+    data.forEach(item => {
+      const li = document.createElement('li')
+      li.textContent = item
+      frag.appendChild(li)
+    });
+    if (frag.children.length !== 0) {
+      ol.replaceChildren(frag)
+    }
+  }
+  loadList()
+</script>
+
+</html>
